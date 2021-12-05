@@ -23,8 +23,8 @@ function cssBundle() {
         gulp
             // css files to be bundled
             .src([                
-                './resources/assets/bower/vendor/slick-carousel/slick/slick.css',  
-                './resources/assets/css/app.css',
+                './resources/assets/bower/vendor/slick-carousel/slick/slick.css', 
+                './resources/assets/css/app.css', 
             ])
             // bundle the css above
             .pipe(concat('all.css'))
