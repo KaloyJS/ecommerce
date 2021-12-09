@@ -26,6 +26,14 @@ function printArr($arr): void
     echo "</pre>";
 }
 
+
+/**
+ * Returns email templates we want to send on email
+ *
+ * @param  mixed $filename
+ * @param  mixed $data
+ * @return string template contents with passed values
+ */
 function make($filename, $data)
 {
     extract($data);
