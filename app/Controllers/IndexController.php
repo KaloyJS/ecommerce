@@ -11,7 +11,7 @@ class IndexController extends BaseController
 
         echo "Inside homepage from controller class";
         $mail = new Mail();
-        $data = [
+        $datas = [
             "to" => "kaloywebdev@gmail.com",
             "subject" => "Welcome to TindahanKo Online Store",
             "view" => "welcome",
