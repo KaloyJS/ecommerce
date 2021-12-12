@@ -15,6 +15,12 @@
     "sass": "^1.44.0"
   },
   "dependencies": {
-    "no-pollution": "^1.0.2"
+    "del": "^6.0.0",
+    "fs": "^0.0.1-security",
+    "gulp-delete-file": "^1.0.2",
+    "gulp-replace-file": "^1.1.0",
+    "gulp-util": "^3.0.8",
+    "no-pollution": "^1.0.2",
+    "save-dev": "^0.0.1-security"
   }
 }

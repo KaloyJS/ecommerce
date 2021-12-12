@@ -3,7 +3,11 @@ const gulp = require('gulp');
 const sass = require('gulp-sass')(require('sass'));
 // const { src, dest } = require('gulp');
 const concat = require('gulp-concat');
+const fs = require('fs').promises;
+const gutil = require('gulp-util');
+const deletefile = require('gulp-delete-file');
 const bowerPath = "./resources/assets/bower/vendor";
+const bundledCss = './public/css/all.css';
 
 // compiles scss into css
 function style() {
@@ -14,11 +18,13 @@ function style() {
 			// 2. pass that file through sass compiler
 			.pipe(sass())
 			// 3  where do i save the compiled CSS?
-			.pipe(gulp.dest('./resources/assets/css'))
+			.pipe(gulp.dest('./resources/assets/css/'))
 	);
 }
 
 function cssBundle() {    
+    
+    
     return (
         gulp
             // css files to be bundled
@@ -29,7 +35,7 @@ function cssBundle() {
             // bundle the css above
             .pipe(concat('all.css'))
             // save to dest path
-            .pipe(gulp.dest('./public/css/all.css'))
+            .pipe(gulp.dest('./public/css/'))
     );
 }
 
@@ -44,13 +50,24 @@ function jsBundle() {
                 bowerPath + '/foundation-sites/dist/js/foundation.min.js',
                 // slick js
                 bowerPath + '/slick-carousel/slick/slick.min.js',
+                // js init file
+                './resources/assets/js/init.js',
                 // our own js file
                 './resources/assets/js/app.js'  
             ])
             // bundle the css above
             .pipe(concat('all.js'))
             // save to dest path
-            .pipe(gulp.dest('./public/js/all.js'))
+            .pipe(gulp.dest('./public/js/'))
+    );
+}
+
+function deleteCssBundle() {
+    return (
+        gulp.src([
+            './public/css/all.css'
+        ])
+        .pipe(deletefile())
     );
 }
 
@@ -66,3 +83,4 @@ exports.style = style;
 exports.watch = watch;
 exports.cssBundle = cssBundle;
 exports.jsBundle = jsBundle;
+exports.deleteCssBundle = deleteCssBundle;

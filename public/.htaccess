@@ -2,6 +2,8 @@
 RewriteEngine on 
 
 #If requested file is not a real file
+RewriteCond %{REQUEST_FILENAME} !/(admin|css|fonts|ico|include|js)/
+RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
 
 #redirect all request to index.php

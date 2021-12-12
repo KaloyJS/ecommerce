@@ -5502,7 +5502,47 @@ a.thumbnail image {
   animation-delay: 700ms !important;
 }
 
+.nav {
+  background-color: #2a3f54;
+}
+.nav .menu > li > a {
+  color: #fff;
+  font-size: 1.2rem;
+}
+.nav .menu > li > a:hover, .nav .menu > li > a:focus, .nav .menu > li > a:active {
+  background-color: #1c2b39;
+}
+.nav h3 {
+  color: #fff;
+  font-size: 1.5rem;
+  text-align: center;
+  font-weight: 500;
+}
+.nav .image-holder {
+  padding: 0 0.7rem;
+  background-color: #E93F49;
+}
+.nav .image-holder img {
+  border-radius: 50%;
+  border: 1px solid #c51721;
+  padding: 0.3rem;
+  margin: 0 auto;
+  height: 200px;
+  width: 200px;
+}
+.nav .image-holder p {
+  font-size: 1rem;
+  color: #fff;
+}
+
+.admin__title-bar .title-bar {
+  background-color: #EdEdEd;
+}
+.admin__title-bar .title-bar .title-bar-title {
+  font-size: 1.5rem;
+  color: #0A0A0A;
+}
+
 body {
-  background: red;
-  font-size: 5px;
+  color: green;
 }

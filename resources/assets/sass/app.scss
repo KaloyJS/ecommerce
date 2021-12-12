@@ -6,9 +6,8 @@
 @import "../bower/vendor/motion-ui/src/motion-ui";
 @include motion-ui-transitions;
 @include motion-ui-animations;
-
+@import 'admin/nav';
 
 body {
-    background: red;
-    font-size: 5px;
+    color: green;
 }
