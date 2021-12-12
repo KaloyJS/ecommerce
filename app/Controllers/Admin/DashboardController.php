@@ -10,6 +10,7 @@ class DashboardController extends BaseController
     public function show()
     {
         Session::Add('admin', 'You are welcome, admin user');
+        Session::remove('admin');
 
         if (Session::has('admin')) {
             $msg = Session::get('admin');
