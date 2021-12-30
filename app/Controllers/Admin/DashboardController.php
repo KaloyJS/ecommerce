@@ -2,7 +2,9 @@
 
 namespace App\Controllers\Admin;
 
+use App\Classes\Request;
 use App\Classes\Session;
+use App\Classes\Utility;
 use App\Controllers\BaseController;
 
 class DashboardController extends BaseController
@@ -19,5 +21,19 @@ class DashboardController extends BaseController
         }
 
         return view('admin/dashboard', ['admin' => $msg]);
+    }
+
+    public function get()
+    {
+        Request::refresh();
+        $data = Request::old('post', 'product');
+        Utility::printArr($data);
+
+        // if (Request::has('post')) {
+        //     $request = Request::get('post');
+        //     Utility::printArr($request->product);
+        // } else {
+        //     return var_dump("posting does not exist");
+        // }
     }
 }
