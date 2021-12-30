@@ -95,4 +95,29 @@ class UploadFile
     {
         return $this->path;
     }
+
+    /**
+     * move
+     *
+     * @param  mixed $temp_path
+     * @param  mixed $folder
+     * @return void
+     */
+    public static function move($temp_path, $folder, $file, $new_filename)
+    {
+        $fileObj = new static;
+        $ds = DIRECTORY_SEPARATOR;
+
+        // set file name
+        $fileObj->setName($file, $new_filename);
+        // get renamed file name
+        $file_name = $fileObj->getName();
+
+        //check if folder is a dir
+        if (!is_dir($folder)) {
+            mkdir($folder, 0777, true);
+        }
+
+        $fileObj->path = "{$folder}{$ds}{$file_name}";
+    }
 }
