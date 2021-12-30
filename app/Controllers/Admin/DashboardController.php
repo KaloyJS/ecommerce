@@ -25,7 +25,7 @@ class DashboardController extends BaseController
 
     public function get()
     {
-        Request::refresh();
+        //Request::refresh();
         $data = Request::old('post', 'product');
         Utility::printArr($data);
 
