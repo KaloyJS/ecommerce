@@ -6,6 +6,7 @@ use App\Classes\Request;
 use App\Classes\Utility;
 use App\Models\Category;
 use App\Classes\CSRFToken;
+use App\Classes\ValidateRequest;
 
 class ProductCategoryController
 {
@@ -22,6 +23,16 @@ class ProductCategoryController
         if (Request::has('post')) {
             // gather all of $_POST values
             $request = Request::get('post');
+            // Form Validation
+            $data = ValidateRequest::maxLength('name', $request->name, 6);
+
+            if ($data) {
+                echo "All Good";
+            } else {
+                echo "Field is below the minimum length required";
+            }
+            exit;
+
             // check if request token is valid, process the form data            
             if (CSRFToken::verifyCSRFToken($request->token)) {
                 # code...
