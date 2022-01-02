@@ -48,3 +48,21 @@ function make($filename, $data)
 
     return $contents;
 }
+
+/**
+ * creates slug
+ *
+ * @param  mixed $value
+ * @return void
+ */
+function slug($value)
+{
+    //removes all character no in thi slist: underscore | letters | numbers | whitespace
+    $value = preg_replace('![^' . preg_quote('_') . '\pL\pN\s]+!u', '', mb_strtolower($value));
+
+    //removes underscore with dash
+    $value = preg_replace('![' . preg_quote('_') . '\s]+!u', '-', $value);
+
+    //remove whitespace
+    return trim($value, '-');
+}

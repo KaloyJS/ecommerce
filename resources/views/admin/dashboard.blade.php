@@ -11,7 +11,7 @@
                 <input type="submit" name="submit" value="Go">
             </form>
 
-            {{ \App\Classes\Request::all() }}
+            
         </div>
     </div>
 @endsection
