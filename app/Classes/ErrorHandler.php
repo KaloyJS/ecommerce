@@ -6,6 +6,8 @@ class ErrorHandler
 {
     public function handleErrors($error_number, $error_message, $error_file, $error_line)
     {
+        // echo $error_message;
+        // exit();
         // create error message from arguments
         $error = "[{$error_number}] and error occurred in 
                     file {$error_file} on line {$error_line}: {$error_message}";

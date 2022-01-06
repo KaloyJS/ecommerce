@@ -23,19 +23,22 @@ class ProductCategoryController
         if (Request::has('post')) {
             // gather all of $_POST values
             $request = Request::get('post');
-            // Form Validation
-            $data = ValidateRequest::maxLength('name', $request->name, 6);
-
-            if ($data) {
-                echo "All Good";
-            } else {
-                echo "Field is below the minimum length required";
-            }
-            exit;
 
             // check if request token is valid, process the form data            
             if (CSRFToken::verifyCSRFToken($request->token)) {
-                # code...
+                $rules = [
+                    'name' => ['required' => true, 'maxLength' => 5, 'string' => true, 'unique' => 'categories']
+                ];
+
+                $validate = new ValidateRequest();
+                $validate->abide($_POST, $rules);
+
+                // check if any validation errors occurred
+                if ($validate->hasError()) {
+                    Utility::printArr($validate->getErrorMessages());
+                    exit();
+                }
+
                 Category::create([
                     'name' => $request->name,
                     'slug' => slug($request->name)
