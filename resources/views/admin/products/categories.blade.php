@@ -7,9 +7,7 @@
             <h2>Product Categories</h2>  
         </div>
 
-        @if(isset($message))
-            <p>{{ $message }}</p>
-        @endif
+        @include('includes.message')
 
         <div class="row expanded">
             <div class="small-12 medium-6 column">
