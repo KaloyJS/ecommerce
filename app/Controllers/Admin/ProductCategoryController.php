@@ -13,8 +13,8 @@ class ProductCategoryController
     public function show()
     {
         $categories = Category::all();
-
-        return view('admin/products/categories', compact('categories'));
+        $message = "Hi there";
+        return view('admin/products/categories', compact('categories', 'message'));
     }
 
     public function store()

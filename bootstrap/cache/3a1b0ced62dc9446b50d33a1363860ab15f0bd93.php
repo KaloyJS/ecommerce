@@ -1,4 +1,4 @@
-{{-- sidebar menu --}}
+
 <div class="off-canvas position-left reveal-for-large nav" id="offCanvas" data-off-canvas>
     <!-- Close button -->
     <button class="close-button" aria-label="Close menu" type="button" data-close>
@@ -25,3 +25,4 @@
 
 </div>    
     
+<?php /**PATH /home/kaloy/sites/ecommerce/resources/views/includes/admin-sidebar.blade.php ENDPATH**/ ?>
