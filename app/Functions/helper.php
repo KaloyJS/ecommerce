@@ -1,6 +1,10 @@
 <?php
 
+use App\Classes\Utility;
 use Jenssegers\Blade\Blade;
+use voku\helper\Paginator;
+use Illuminate\Database\Capsule\Manager as Capsule;
+
 
 function view($path, array $data = [])
 {
@@ -12,7 +16,6 @@ function view($path, array $data = [])
     // echo $blade->view()->make($path, $data)->render();
     echo $blade->make($path, $data)->render();
 }
-
 /**
  * Prints array in a nice way
  *
@@ -25,8 +28,6 @@ function printArr($arr): void
     print_r($arr);
     echo "</pre>";
 }
-
-
 /**
  * Returns email templates we want to send on email
  *
@@ -48,7 +49,6 @@ function make($filename, $data)
 
     return $contents;
 }
-
 /**
  * creates slug
  *
@@ -65,4 +65,21 @@ function slug($value)
 
     //remove whitespace
     return trim($value, '-');
+}
+
+/** 
+ * Paginate data using Paginator package
+ * 
+ */
+function paginate($num_of_records, $total_record, $table_name, $object)
+{
+
+    $pages = new Paginator($num_of_records, 'p');
+    // pass number of records to
+    $pages->set_total($total_record);
+
+    $data = Capsule::select("SELECT * FROM $table_name ORDER BY created_at DESC" . $pages->get_limit());
+    $categories = $object->transform($data);
+
+    return [$categories, $pages->page_links()];
 }

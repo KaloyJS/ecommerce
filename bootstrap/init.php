@@ -12,7 +12,7 @@ require_once __DIR__ . '/../app/Config/_env.php';
 new \App\Classes\Database();
 
 /** Set custom error handler */
-// set_error_handler([new \App\Classes\ErrorHandler(), 'handleErrors']);
+set_error_handler([new \App\Classes\ErrorHandler(), 'handleErrors']);
 
 /** Load routing file */
 require_once __DIR__ . '/../app/Routing/routes.php';
