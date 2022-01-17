@@ -3,8 +3,10 @@
 namespace App\Controllers\Admin;
 
 use App\Classes\Request;
+use App\Classes\Session;
 use App\Classes\Utility;
 use App\Models\Category;
+use App\Classes\Redirect;
 use App\Classes\CSRFToken;
 use App\Classes\ValidateRequest;
 
@@ -19,7 +21,7 @@ class ProductCategoryController
         $total = count(Category::all());
         $object = new Category;
 
-        list($this->categories, $this->links) = paginate(3, $total, $this->table_name, $object);
+        list($this->categories, $this->links) = paginate(6, $total, $this->table_name, $object);
     }
 
     public function show()
@@ -62,7 +64,7 @@ class ProductCategoryController
                 ]);
 
                 $total = count(Category::all());
-                list($this->categories, $this->links) = paginate(3, $total, $this->table_name, new Category());
+                list($this->categories, $this->links) = paginate(6, $total, $this->table_name, new Category());
 
                 return view('admin/products/categories', [
                     'categories' => $this->categories,
@@ -76,7 +78,7 @@ class ProductCategoryController
         return null;
     }
 
-    public function edit()
+    public function edit($id)
     {
         // check if post request exists
         if (Request::has('post')) {
@@ -100,9 +102,28 @@ class ProductCategoryController
                     exit();
                 }
 
-                Category::where('id', $request->id)->update(['name' => $request->name]);
+                Category::where('id', $id)->update(['name' => $request->name]);
                 echo json_encode(['success' => 'Record Update Successfully']);
                 exit();
+            }
+            throw new \Exception('Token mismatch');
+        }
+
+        return null;
+    }
+
+    public function delete($id)
+    {
+        // check if post request exists
+        if (Request::has('post')) {
+            // gather all of $_POST values
+            $request = Request::get('post');
+
+            // check if request token is valid, process the form data            
+            if (CSRFToken::verifyCSRFToken($request->token)) {
+                Category::destroy($id);
+                Session::add('success', 'Category Deleted');
+                Redirect::to('/admin/product/categories');
             }
             throw new \Exception('Token mismatch');
         }

@@ -5663,16 +5663,23 @@ a.thumbnail image {
   color: #0A0A0A;
 }
 
+h2 {
+  font-size: 1.5rem;
+  margin-top: 0.8rem;
+  margin-bottom: 1.2rem;
+  font-weight: 500;
+}
+
+.callout {
+  width: 100%;
+}
+
 .reveal {
   border: 0;
   border-radius: 0.5rem;
 }
 .reveal:focus {
   outline-style: none;
-}
-.reveal h2 {
-  font-size: 1.5rem;
-  font-weight: 500;
 }
 
 .admin-categories-actions .fa-edit {

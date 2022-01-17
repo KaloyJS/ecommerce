@@ -11,6 +11,7 @@
 
 			case 'adminCategories':
 				ESTORE.admin.update();
+				ESTORE.admin.delete();
 				break;
 
 			default:

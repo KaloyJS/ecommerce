@@ -1,4 +1,4 @@
-<div class="row extended">
+<div class="row extended column">
     
     <?php if(isset($errors) && count($errors)): ?>
         <div class="callout alert" data-closable>
@@ -14,10 +14,15 @@
         </div>
     <?php endif; ?>
 
-    <?php if(isset($success)): ?>
+    <?php if(isset($success) || \App\Classes\Session::has('success')): ?>
         <div class="callout success" data-closable>
-            <?php echo e($success); ?>
+            <?php if(isset($success)): ?>
+                <?php echo e($success); ?>
 
+            <?php elseif(\App\Classes\Session::has('success')): ?>
+                <?php echo e(\App\Classes\Session::flash('success')); ?>
+
+            <?php endif; ?>
 
             <button class="close-button" arial-label="Dismiss Message" type="button" data-close>
                 <span arial-hidden="true">&times;</span>

@@ -19,6 +19,27 @@ this.inputs.eq(t).attr({id:i,max:this.options.end,min:this.options.start,step:th
 (function () {
 	'use strict';
 
+	ESTORE.admin.delete = function () {
+		$('table[data-form="deleteForm"]').on(
+			'click',
+			'.delete-item',
+			function (e) {
+				e.preventDefault();
+				const form = $(this);
+
+				$('#confirm')
+					.foundation('open')
+					.on('click', '#delete-btn', function () {
+						form.submit();
+					});
+			}
+		);
+	};
+})();
+
+(function () {
+	'use strict';
+
 	ESTORE.admin.update = function () {
 		//update product category
 		$('.update-category').on('click', function (e) {
@@ -38,6 +59,8 @@ this.inputs.eq(t).attr({id:i,max:this.options.end,min:this.options.start,step:th
 					let response = JSON.parse(data);
 					$('.notification')
 						.css('display', 'block')
+						.removeClass('alert')
+						.addClass('primary')
 						.delay(4000)
 						.slideUp(300)
 						.html(response.success);
@@ -79,6 +102,7 @@ this.inputs.eq(t).attr({id:i,max:this.options.end,min:this.options.start,step:th
 
 			case 'adminCategories':
 				ESTORE.admin.update();
+				ESTORE.admin.delete();
 				break;
 
 			default:
