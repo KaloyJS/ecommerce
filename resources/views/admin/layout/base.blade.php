@@ -11,7 +11,7 @@
     <script src="https://kit.fontawesome.com/7c71ae126c.js" crossorigin="anonymous"></script>
 </head>
 
-<body>
+<body data-page-id="@yield('data-page-id')">
     @include('includes.admin-sidebar')
 
     <div class="off-canvas-content admin__title-bar" data-off-canvas-content>

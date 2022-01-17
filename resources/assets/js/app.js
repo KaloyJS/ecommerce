@@ -1,2 +1,8 @@
-console.log("Welcome to TindahanKo, look around!");
-console.log("Test123");
+(function () {
+	'use strict';
+
+	window.ESTORE = {
+		global: {},
+		admin: {},
+	};
+})();

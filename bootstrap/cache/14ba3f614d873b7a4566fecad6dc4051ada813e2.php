@@ -1,4 +1,5 @@
-<?php $__env->startSection('title', 'Product Category'); ?>
+<?php $__env->startSection('title', 'Product Categories'); ?>
+<?php $__env->startSection('data-page-id', 'adminCategories'); ?>
 
 <?php $__env->startSection('content'); ?>
     <div class="dashboard">
@@ -43,9 +44,29 @@
                                     <td><?php echo e($category['name']); ?></td>
                                     <td><?php echo e($category['slug']); ?></td>
                                     <td><?php echo e($category['added']); ?></td>
-                                    <td width="100" class="text-right">
-                                        <a href="#"><i class="fa fa-edit"></i></a>
+                                    <td width="100" class="text-right admin-categories-actions">                                    
+                                        <a data-open="item-<?php echo e($category['id']); ?>"><i class="fa fa-edit" ></i></a>
                                         <a href="#"><i class="fa fa-times"></i></a>
+
+                                        
+                                        <div class="reveal" id="item-<?php echo e($category['id']); ?>" 
+                                            data-reveal data-close-on-click="false" data-close-on-esc="false"
+                                            data-animation-in="scale-in-up" data-animation-out="scale-out-down">
+                                            <div class="notification callout primary"></div>
+                                            <h2>Edit Category</h2>
+                                            <form >
+                                                <div class="input-group">
+                                                    <input type="text"  name="name" value="<?php echo e($category['name']); ?>">
+                                                    <input type="hidden" name="token" value="<?php echo e(\App\Classes\CSRFToken::_token()); ?>">
+                                                    <div>
+                                                        <input type="submit" class="button update-category" id="<?php echo e($category['id']); ?>" value="Update">
+                                                    </div>
+                                                </div>
+                                            </form>
+                                            <a href="/admin/product/categories" class="close-button" aria-label="Close modal" type="button">
+                                                <span aria-hidden="true">&times;</span>
+                                            </a>
+                                        </div>
                                     </td>
                                 </tr>
                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>

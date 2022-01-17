@@ -1,9 +1,10 @@
 // font
 @import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Raleway:wght@100;300;400;600&display=swap');
 
-@import "../bower/vendor/foundation-sites/assets/foundation";
+@import '../bower/vendor/foundation-sites/assets/foundation';
 
-@import "../bower/vendor/motion-ui/src/motion-ui";
+@import '../bower/vendor/motion-ui/src/motion-ui';
 @include motion-ui-transitions;
 @include motion-ui-animations;
 @import 'admin/nav';
+@import 'global';

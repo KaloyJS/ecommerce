@@ -1,5 +1,6 @@
 @extends('admin.layout.base')
-@section('title', 'Product Category')
+@section('title', 'Product Categories')
+@section('data-page-id', 'adminCategories')
 
 @section('content')
     <div class="dashboard">
@@ -42,11 +43,31 @@
                             @foreach($categories as $category)
                                 <tr>
                                     <td>{{ $category['name'] }}</td>
-                                    <td>{{ $category['slug']}}</td>
+                                    <td>{{ $category['slug'] }}</td>
                                     <td>{{ $category['added'] }}</td>
-                                    <td width="100" class="text-right">
-                                        <a href="#"><i class="fa fa-edit"></i></a>
+                                    <td width="100" class="text-right admin-categories-actions">                                    
+                                        <a data-open="item-{{$category['id']}}"><i class="fa fa-edit" ></i></a>
                                         <a href="#"><i class="fa fa-times"></i></a>
+
+                                        {{-- Edit Category Modal --}}
+                                        <div class="reveal" id="item-{{$category['id']}}" 
+                                            data-reveal data-close-on-click="false" data-close-on-esc="false"
+                                            data-animation-in="scale-in-up" data-animation-out="scale-out-down">
+                                            <div class="notification callout primary"></div>
+                                            <h2>Edit Category</h2>
+                                            <form >
+                                                <div class="input-group">
+                                                    <input type="text"  name="name" value="{{ $category['name'] }}">
+                                                    <input type="hidden" name="token" value="{{ \App\Classes\CSRFToken::_token() }}">
+                                                    <div>
+                                                        <input type="submit" class="button update-category" id="{{ $category['id'] }}" value="Update">
+                                                    </div>
+                                                </div>
+                                            </form>
+                                            <a href="/admin/product/categories" class="close-button" aria-label="Close modal" type="button">
+                                                <span aria-hidden="true">&times;</span>
+                                            </a>
+                                        </div>
                                     </td>
                                 </tr>
                             @endforeach

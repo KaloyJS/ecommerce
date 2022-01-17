@@ -5542,3 +5542,30 @@ a.thumbnail image {
   font-size: 1.5rem;
   color: #0A0A0A;
 }
+
+.reveal {
+  border: 0;
+  border-radius: 0.5rem;
+}
+.reveal:focus {
+  outline-style: none;
+}
+.reveal h2 {
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+
+.admin-categories-actions .fa-edit {
+  color: #8a6d3b;
+}
+.admin-categories-actions .fa-times {
+  color: #ff0000;
+}
+
+.notification {
+  margin-top: 1.5rem;
+  display: none;
+}
+.notification ul li {
+  list-style-type: none;
+}

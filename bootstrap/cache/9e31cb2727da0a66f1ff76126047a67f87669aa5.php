@@ -11,7 +11,7 @@
     <script src="https://kit.fontawesome.com/7c71ae126c.js" crossorigin="anonymous"></script>
 </head>
 
-<body>
+<body data-page-id="<?php echo $__env->yieldContent('data-page-id'); ?>">
     <?php echo $__env->make('includes.admin-sidebar', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 
     <div class="off-canvas-content admin__title-bar" data-off-canvas-content>
