@@ -23,7 +23,7 @@
             </div>
 
             <div class="small-12 medium-5 column end">
-                <form action="/admin/product/categories" method="post">
+                <form action="/admin/product/categories" method="post" autocomplete="off">
                     <div class="input-group">
                         <input type="text" class="input-group-field" name="name" placeholder="Category name">
                         <input type="hidden" name="token" value="{{ \App\Classes\CSRFToken::_token() }}">
@@ -45,12 +45,15 @@
                                     <td>{{ $category['name'] }}</td>
                                     <td>{{ $category['slug'] }}</td>
                                     <td>{{ $category['added'] }}</td>
-                                    <td width="100" class="text-right admin-categories-actions">        
-                                        <span>
+                                    <td width="100" class="text-right admin-categories-actions"> 
+                                        <span data-tooltip tabindex="1" title="Add Sub-category" class="has-tip top">
+                                            <a data-open="add-subcategory-{{$category['id']}}"><i class="fa fa-plus" ></i></a>
+                                        </span>       
+                                        <span data-tooltip tabindex="1" title="Edit Category" class="has-tip top">
                                             <a data-open="item-{{$category['id']}}"><i class="fa fa-edit" ></i></a>
                                         </span>
-                                        <span style="display: inline-block">
-                                           <form action="/admin/product/categories/{{$category['id']}}/delete" method="POST" class="delete-item">
+                                        <span style="display: inline-block" data-tooltip tabindex="1" title="Delete Category" class="has-tip top">
+                                           <form action="/admin/product/categories/{{$category['id']}}/delete" method="POST" class="delete-item" >
                                                 <input type="hidden" name="token" value="{{ \App\Classes\CSRFToken::_token() }}">
                                                 <button type="submit"><i class="fa fa-times delete"></i></button>
                                            </form>
@@ -62,12 +65,32 @@
                                             data-animation-in="scale-in-up" data-animation-out="scale-out-down">
                                             <div class="notification callout primary"></div>
                                             <h2>Edit Category</h2>
-                                            <form >
+                                            <form autocomplete="off">
                                                 <div class="input-group">
                                                     <input type="text"  name="name" value="{{ $category['name'] }}">
                                                     <input type="hidden" name="token" value="{{ \App\Classes\CSRFToken::_token() }}">
                                                     <div>
                                                         <input type="submit" class="button update-category" id="{{ $category['id'] }}" value="Update">
+                                                    </div>
+                                                </div>
+                                            </form>
+                                            <a href="/admin/product/categories" class="close-button" aria-label="Close modal" type="button">
+                                                <span aria-hidden="true">&times;</span>
+                                            </a>
+                                        </div>
+
+                                        {{-- Add Subcategory Modal --}}
+                                        <div class="reveal" id="add-subcategory-{{$category['id']}}" 
+                                            data-reveal data-close-on-click="false" data-close-on-esc="false"
+                                            data-animation-in="scale-in-up" data-animation-out="scale-out-down">
+                                            <div class="notification callout primary"></div>
+                                            <h2>Add Subcategory</h2>
+                                            <form autocomplete="off">
+                                                <div class="input-group">
+                                                    <input type="text"  name="name">
+                                                    <input type="hidden" name="token" value="{{ \App\Classes\CSRFToken::_token() }}">
+                                                    <div>
+                                                        <input type="submit" class="button add-subcategory" id="{{ $category['id'] }}" value="Add Sub-category">
                                                     </div>
                                                 </div>
                                             </form>

@@ -8,31 +8,12 @@ use App\Classes\Utility;
 use App\Models\Category;
 use App\Classes\Redirect;
 use App\Classes\CSRFToken;
+use App\Models\SubCategory;
 use App\Classes\ValidateRequest;
 use App\Controllers\BaseController;
 
-
-class ProductCategoryController extends BaseController
+class SubCategoryController extends BaseController
 {
-    public $table_name = 'categories';
-    public $categories;
-    public $links;
-
-    public function __construct()
-    {
-        $total = count(Category::all());
-        $object = new Category;
-
-        list($this->categories, $this->links) = paginate(6, $total, $this->table_name, $object);
-    }
-
-    public function show()
-    {
-        return view('admin/products/categories', [
-            'categories' => $this->categories,
-            'links' => $this->links
-        ]);
-    }
 
     public function store()
     {
@@ -40,39 +21,45 @@ class ProductCategoryController extends BaseController
         if (Request::has('post')) {
             // gather all of $_POST values
             $request = Request::get('post');
+            $extra_errors = [];
 
             // check if request token is valid, process the form data            
             if (CSRFToken::verifyCSRFToken($request->token)) {
                 $rules = [
-                    'name' => ['required' => true, 'minLength' => 3, 'string' => true, 'unique' => 'categories']
+                    'name' => ['required' => true, 'minLength' => 3, 'string' => true],
+                    'category_id' => ['required']
                 ];
 
                 $validate = new ValidateRequest();
                 $validate->abide($_POST, $rules);
 
-                // check if any validation errors occurred
-                if ($validate->hasError()) {
-                    $errors = $validate->getErrorMessages();
-                    return view('admin/products/categories', [
-                        'categories' => $this->categories,
-                        'links' => $this->links,
-                        'errors' => $errors
-                    ]);
+                $duplicate_subcategory = SubCategory::where('name', $request->name)
+                    ->where('category_id', $request->category_id)->exists();
+                if ($duplicate_subcategory) {
+                    $extra_errors['name'] = array('Subcategory already exists');
                 }
 
-                Category::create([
+                $category = Category::where('id', $request->category_id)->exists();
+                if (!$category) {
+                    $extra_errors['name'] = array('Invalid product category.');
+                }
+
+                // check if any validation errors occurred
+                if ($validate->hasError() || $duplicate_subcategory || !$category) {
+                    $errors = $validate->getErrorMessages();
+                    $response = count($extra_errors) ?  array_merge($errors, $extra_errors) : $errors;
+                    header('HTTP/1.1 422 Unrpocessable Entity', true, 422);
+                    echo json_encode($response);
+                    exit();
+                }
+
+                SubCategory::create([
                     'name' => $request->name,
+                    'category_id' => $request->category_id,
                     'slug' => slug($request->name)
                 ]);
 
-                $total = count(Category::all());
-                list($this->categories, $this->links) = paginate(6, $total, $this->table_name, new Category());
-
-                return view('admin/products/categories', [
-                    'categories' => $this->categories,
-                    'links' => $this->links,
-                    'success' => 'Category Created'
-                ]);
+                echo json_encode(['success' => 'Subcategory created successfully']);
             }
             throw new \Exception('Token mismatch');
         }
