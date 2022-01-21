@@ -86,8 +86,9 @@
                                             <h2>Add Subcategory</h2>
                                             <form autocomplete="off">
                                                 <div class="input-group">
-                                                    <input type="text"  name="name">
+                                                    <input type="text"  name="name"> 
                                                     <input type="hidden" name="token" value="<?php echo e(\App\Classes\CSRFToken::_token()); ?>">
+
                                                     <div>
                                                         <input type="submit" class="button add-subcategory" id="<?php echo e($category['id']); ?>" value="Add Sub-category">
                                                     </div>

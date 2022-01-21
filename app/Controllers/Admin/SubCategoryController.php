@@ -24,10 +24,10 @@ class SubCategoryController extends BaseController
             $extra_errors = [];
 
             // check if request token is valid, process the form data            
-            if (CSRFToken::verifyCSRFToken($request->token)) {
+            if (CSRFToken::verifyCSRFToken($request->token, false)) {
                 $rules = [
                     'name' => ['required' => true, 'minLength' => 3, 'string' => true],
-                    'category_id' => ['required']
+                    'category_id' => ['required' => true]
                 ];
 
                 $validate = new ValidateRequest();
@@ -60,6 +60,7 @@ class SubCategoryController extends BaseController
                 ]);
 
                 echo json_encode(['success' => 'Subcategory created successfully']);
+                exit();
             }
             throw new \Exception('Token mismatch');
         }
@@ -86,7 +87,7 @@ class SubCategoryController extends BaseController
                 // check if any validation errors occurred
                 if ($validate->hasError()) {
                     $errors = $validate->getErrorMessages();
-                    header('HTTP/1.1 422 Unrpocessable Entity', true, 422);
+                    header('HTTP/1.1 422 Unprocessable Entity', true, 422);
                     echo json_encode($errors);
                     exit();
                 }
