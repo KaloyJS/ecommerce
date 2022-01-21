@@ -8,6 +8,7 @@ use App\Classes\Utility;
 use App\Models\Category;
 use App\Classes\Redirect;
 use App\Classes\CSRFToken;
+use App\Models\SubCategory;
 use App\Classes\ValidateRequest;
 use App\Controllers\BaseController;
 
@@ -17,6 +18,8 @@ class ProductCategoryController extends BaseController
     public $table_name = 'categories';
     public $categories;
     public $links;
+    public $subcategories;
+    public $subcategories_links;
 
     public function __construct()
     {
@@ -24,13 +27,20 @@ class ProductCategoryController extends BaseController
         $object = new Category;
 
         list($this->categories, $this->links) = paginate(6, $total, $this->table_name, $object);
+
+        $subcategoriesTotal = count(SubCategory::all());
+        $subcategories_object = new SubCategory;
+
+        list($this->subcategories, $this->subcategories_links) = paginate(6, $subcategoriesTotal, 'sub_categories', $subcategories_object);
     }
 
     public function show()
     {
         return view('admin/products/categories', [
             'categories' => $this->categories,
-            'links' => $this->links
+            'links' => $this->links,
+            'subcategories' => $this->subcategories,
+            'subcategories_links' => $this->subcategories_links
         ]);
     }
 
@@ -56,7 +66,9 @@ class ProductCategoryController extends BaseController
                     return view('admin/products/categories', [
                         'categories' => $this->categories,
                         'links' => $this->links,
-                        'errors' => $errors
+                        'errors' => $errors,
+                        'subcategories' => $this->subcategories,
+                        'subcategories_links' => $this->subcategories_links
                     ]);
                 }
 
@@ -68,10 +80,16 @@ class ProductCategoryController extends BaseController
                 $total = count(Category::all());
                 list($this->categories, $this->links) = paginate(6, $total, $this->table_name, new Category());
 
+                $subcategories_object = new SubCategory;
+                $subcategoriesTotal = count(SubCategory::all());
+                list($this->subcategories, $this->subcategories_links) = paginate(6, $subcategoriesTotal, 'sub_categories', $subcategories_object);
+
                 return view('admin/products/categories', [
                     'categories' => $this->categories,
                     'links' => $this->links,
-                    'success' => 'Category Created'
+                    'success' => 'Category Created',
+                    'subcategories' => $this->subcategories,
+                    'subcategories_links' => $this->subcategories_links
                 ]);
             }
             throw new \Exception('Token mismatch');

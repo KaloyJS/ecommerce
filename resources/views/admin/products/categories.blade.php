@@ -3,7 +3,7 @@
 @section('data-page-id', 'adminCategories')
 
 @section('content')
-    <div class="dashboard">
+    <div class="category">
         <div class="row expanded column" >
             <h2>Product Categories</h2>  
         </div>
@@ -113,5 +113,64 @@
         </div>
     </div>
 
+    <div class="subcategory">
+        <div class="row expanded column" >
+            <h2>Subcategories</h2>  
+        </div>    
+
+        <div class="row expanded">
+            <div class="small-12 medium-11 column">
+                @if(count($subcategories))
+                    <table class="hover" data-form="deleteForm">
+                        <tbody>
+                            @foreach($subcategories as $subcategory)
+                                <tr>
+                                    <td>{{ $subcategory['name'] }}</td>
+                                    <td>{{ $subcategory['slug'] }}</td>
+                                    <td>{{ $subcategory['added'] }}</td>
+                                    <td width="100" class="text-right admin-categories-actions"> 
+                                             
+                                        <span data-tooltip tabindex="1" title="Edit Subcategory" class="has-tip top">
+                                            <a data-open="item-subcategory-{{$subcategory['id']}}"><i class="fa fa-edit" ></i></a>
+                                        </span>
+                                        <span style="display: inline-block" data-tooltip tabindex="1" title="Delete Subcategory" class="has-tip top">
+                                           <form action="/admin/product/subcategories/{{$subcategory['id']}}/delete" method="POST" class="delete-item" >
+                                                <input type="hidden" name="token" value="{{ \App\Classes\CSRFToken::_token() }}">
+                                                <button type="submit"><i class="fa fa-times delete"></i></button>
+                                           </form>
+                                        </span> 
+
+                                        {{-- Edit Subcategory Modal --}}
+                                        <div class="reveal" id="item-subcategory-{{$subcategory['id']}}" 
+                                            data-reveal data-close-on-click="false" data-close-on-esc="false"
+                                            data-animation-in="scale-in-up" data-animation-out="scale-out-down">
+                                            <div class="notification callout primary"></div>
+                                            <h2>Edit Subcategory</h2>
+                                            <form autocomplete="off">
+                                                <div class="input-group">
+                                                    <input type="text"  name="name" value="{{ $subcategory['name'] }}">
+                                                    <input type="hidden" name="token" value="{{ \App\Classes\CSRFToken::_token() }}">
+                                                    <div>
+                                                        <input type="submit" class="button update-category" id="{{ $subcategory['id'] }}" value="Update">
+                                                    </div>
+                                                </div>
+                                            </form>
+                                            <a href="/admin/product/categories" class="close-button" aria-label="Close modal" type="button">
+                                                <span aria-hidden="true">&times;</span>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+
+                    {!!  $subcategories_links !!}
+                @else
+                    <h2>No Subcategories created</h2>
+                @endif
+            </div>
+        </div>
+    </div>
     @include('includes.delete-modal')
 @endsection
