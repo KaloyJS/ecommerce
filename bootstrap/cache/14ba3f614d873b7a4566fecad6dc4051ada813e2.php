@@ -4,7 +4,7 @@
 <?php $__env->startSection('content'); ?>
     <div class="category">
         <div class="row expanded column" >
-            <h2>Product Categories</h2>  
+            <h2>Product Categories</h2>           
         </div>
 
         <?php echo $__env->make('includes.message', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
@@ -37,14 +37,20 @@
         <div class="row expanded">
             <div class="small-12 medium-11 column">
                 <?php if(count($categories)): ?>
-                    <table class="hover" data-form="deleteForm">
+                    <table class="hover unstripe" data-form="deleteForm">
                         <tbody>
+                            <thead>
+                                <th>Name</th>
+                                <th>Slug</th>
+                                <th>Date Created</th>
+                                <th width="50">Actions</th>
+                            </thead>
                             <?php $__currentLoopData = $categories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $category): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                 <tr>
                                     <td><?php echo e($category['name']); ?></td>
                                     <td><?php echo e($category['slug']); ?></td>
                                     <td><?php echo e($category['added']); ?></td>
-                                    <td width="100" class="text-right admin-categories-actions"> 
+                                    <td width="50" class="text-right admin-categories-actions"> 
                                         <span data-tooltip tabindex="1" title="Add Sub-category" class="has-tip top">
                                             <a data-open="add-subcategory-<?php echo e($category['id']); ?>"><i class="fa fa-plus" ></i></a>
                                         </span>       
@@ -115,20 +121,26 @@
 
     <div class="subcategory">
         <div class="row expanded column" >
-            <h2>Subcategories</h2>  
+            <h2>Subcategories</h2>
         </div>    
 
         <div class="row expanded">
             <div class="small-12 medium-11 column">
                 <?php if(count($subcategories)): ?>
-                    <table class="hover" data-form="deleteForm">
+                    <table class="hover unstripe" data-form="deleteForm">
                         <tbody>
+                            <thead>
+                                <th>Name</th>
+                                <th>Slug</th>
+                                <th>Date Created</th>
+                                <th width="50">Actions</th>
+                            </thead>
                             <?php $__currentLoopData = $subcategories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $subcategory): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                 <tr>
                                     <td><?php echo e($subcategory['name']); ?></td>
                                     <td><?php echo e($subcategory['slug']); ?></td>
                                     <td><?php echo e($subcategory['added']); ?></td>
-                                    <td width="100" class="text-right admin-categories-actions"> 
+                                    <td width="50" class="text-right admin-categories-actions"> 
                                              
                                         <span data-tooltip tabindex="1" title="Edit Subcategory" class="has-tip top">
                                             <a data-open="item-subcategory-<?php echo e($subcategory['id']); ?>"><i class="fa fa-edit" ></i></a>

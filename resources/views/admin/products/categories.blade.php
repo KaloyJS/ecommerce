@@ -5,7 +5,7 @@
 @section('content')
     <div class="category">
         <div class="row expanded column" >
-            <h2>Product Categories</h2>  
+            <h2>Product Categories</h2>           
         </div>
 
         @include('includes.message')
@@ -38,14 +38,20 @@
         <div class="row expanded">
             <div class="small-12 medium-11 column">
                 @if(count($categories))
-                    <table class="hover" data-form="deleteForm">
+                    <table class="hover unstripe" data-form="deleteForm">
                         <tbody>
+                            <thead>
+                                <th>Name</th>
+                                <th>Slug</th>
+                                <th>Date Created</th>
+                                <th width="50">Actions</th>
+                            </thead>
                             @foreach($categories as $category)
                                 <tr>
                                     <td>{{ $category['name'] }}</td>
                                     <td>{{ $category['slug'] }}</td>
                                     <td>{{ $category['added'] }}</td>
-                                    <td width="100" class="text-right admin-categories-actions"> 
+                                    <td width="50" class="text-right admin-categories-actions"> 
                                         <span data-tooltip tabindex="1" title="Add Sub-category" class="has-tip top">
                                             <a data-open="add-subcategory-{{$category['id']}}"><i class="fa fa-plus" ></i></a>
                                         </span>       
@@ -115,20 +121,26 @@
 
     <div class="subcategory">
         <div class="row expanded column" >
-            <h2>Subcategories</h2>  
+            <h2>Subcategories</h2>
         </div>    
 
         <div class="row expanded">
             <div class="small-12 medium-11 column">
                 @if(count($subcategories))
-                    <table class="hover" data-form="deleteForm">
+                    <table class="hover unstripe" data-form="deleteForm">
                         <tbody>
+                            <thead>
+                                <th>Name</th>
+                                <th>Slug</th>
+                                <th>Date Created</th>
+                                <th width="50">Actions</th>
+                            </thead>
                             @foreach($subcategories as $subcategory)
                                 <tr>
                                     <td>{{ $subcategory['name'] }}</td>
                                     <td>{{ $subcategory['slug'] }}</td>
                                     <td>{{ $subcategory['added'] }}</td>
-                                    <td width="100" class="text-right admin-categories-actions"> 
+                                    <td width="50" class="text-right admin-categories-actions"> 
                                              
                                         <span data-tooltip tabindex="1" title="Edit Subcategory" class="has-tip top">
                                             <a data-open="item-subcategory-{{$subcategory['id']}}"><i class="fa fa-edit" ></i></a>
