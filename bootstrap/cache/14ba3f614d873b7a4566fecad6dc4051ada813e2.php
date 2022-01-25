@@ -107,7 +107,7 @@
                     <?php echo $links; ?>
 
                 <?php else: ?>
-                    <h3>No Categories created</h3>
+                    <p>No Categories created</p>
                 <?php endif; ?>
             </div>
         </div>
@@ -148,10 +148,24 @@
                                             <h2>Edit Subcategory</h2>
                                             <form autocomplete="off">
                                                 <div class="input-group">
+                                                    <label for="name">Change Name</label>
                                                     <input type="text"  name="name" value="<?php echo e($subcategory['name']); ?>">
                                                     <input type="hidden" name="token" value="<?php echo e(\App\Classes\CSRFToken::_token()); ?>">
+
+                                                    <label for="category_id">Change Category</label>
+                                                        <select name="category_id">                                                            
+                                                            <?php $__currentLoopData = \App\Models\Category::all(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $category): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                                <option value="<?php echo e($category['id']); ?>" 
+                                                                        <?php echo e($category['id'] == $subcategory['category_id'] ? 'selected' : ''); ?>
+
+                                                                >
+                                                                    <?php echo e($category['name']); ?>
+
+                                                                </option>
+                                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                                        </select>
                                                     <div>
-                                                        <input type="submit" class="button update-category" id="<?php echo e($subcategory['id']); ?>" value="Update">
+                                                        <input type="submit" class="button update-subcategory" id="<?php echo e($subcategory['id']); ?>" value="Update">
                                                     </div>
                                                 </div>
                                             </form>
@@ -168,7 +182,7 @@
                     <?php echo $subcategories_links; ?>
 
                 <?php else: ?>
-                    <h2>No Subcategories created</h2>
+                    <p>No Subcategories created</p>
                 <?php endif; ?>
             </div>
         </div>

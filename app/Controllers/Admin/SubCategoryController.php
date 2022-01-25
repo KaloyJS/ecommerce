@@ -74,26 +74,43 @@ class SubCategoryController extends BaseController
         if (Request::has('post')) {
             // gather all of $_POST values
             $request = Request::get('post');
+            $extra_errors = [];
 
             // check if request token is valid, process the form data            
             if (CSRFToken::verifyCSRFToken($request->token, false)) {
                 $rules = [
-                    'name' => ['required' => true, 'minLength' => 3, 'string' => true, 'unique' => 'categories']
+                    'name' => ['required' => true, 'minLength' => 3, 'string' => true],
+                    'category_id' => ['required' => true]
                 ];
 
                 $validate = new ValidateRequest();
                 $validate->abide($_POST, $rules);
 
+                $duplicate_subcategory = SubCategory::where('name', $request->name)
+                    ->where('category_id', $request->category_id)->exists();
+                if ($duplicate_subcategory) {
+                    $extra_errors['name'] = array('You have not made any changes');
+                }
+
+                $category = Category::where('id', $request->category_id)->exists();
+                if (!$category) {
+                    $extra_errors['name'] = array('You have not made any changes');
+                }
+
                 // check if any validation errors occurred
-                if ($validate->hasError()) {
+                if ($validate->hasError() || $duplicate_subcategory || !$category) {
                     $errors = $validate->getErrorMessages();
-                    header('HTTP/1.1 422 Unprocessable Entity', true, 422);
-                    echo json_encode($errors);
+                    $response = count($extra_errors) ?  array_merge($errors, $extra_errors) : $errors;
+                    header('HTTP/1.1 422 Unrpocessable Entity', true, 422);
+                    echo json_encode($response);
                     exit();
                 }
 
-                Category::where('id', $id)->update(['name' => $request->name]);
-                echo json_encode(['success' => 'Record Update Successfully']);
+                SubCategory::where('id', $id)->update([
+                    'name' => $request->name,
+                    'category_id' => $request->category_id
+                ]);
+                echo json_encode(['success' => 'Subcategory updated successfully']);
                 exit();
             }
             throw new \Exception('Token mismatch');
@@ -111,8 +128,8 @@ class SubCategoryController extends BaseController
 
             // check if request token is valid, process the form data            
             if (CSRFToken::verifyCSRFToken($request->token)) {
-                Category::destroy($id);
-                Session::add('success', 'Category Deleted');
+                SubCategory::destroy($id);
+                Session::add('success', 'SubCategory Deleted');
                 Redirect::to('/admin/product/categories');
             }
             throw new \Exception('Token mismatch');

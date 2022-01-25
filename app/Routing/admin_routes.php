@@ -34,10 +34,24 @@ $router->map(
     'delete_product_category'
 );
 
-//subcateogry
+//subcategory
 $router->map(
     'POST',
     '/admin/product/subcategories/create',
     'App\Controllers\Admin\SubCategoryController@store',
     'create_subcategory'
+);
+
+$router->map(
+    'POST',
+    '/admin/product/subcategories/[i:id]/edit',
+    'App\Controllers\Admin\SubCategoryController@edit',
+    'edit_subcategory'
+);
+
+$router->map(
+    'POST',
+    '/admin/product/subcategories/[i:id]/delete',
+    'App\Controllers\Admin\SubCategoryController@delete',
+    'delete_subcategory'
 );

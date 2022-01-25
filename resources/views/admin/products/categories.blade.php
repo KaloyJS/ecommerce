@@ -107,7 +107,7 @@
 
                     {!!  $links !!}
                 @else
-                    <h3>No Categories created</h3>
+                    <p>No Categories created</p>
                 @endif
             </div>
         </div>
@@ -148,10 +148,22 @@
                                             <h2>Edit Subcategory</h2>
                                             <form autocomplete="off">
                                                 <div class="input-group">
+                                                    <label for="name">Change Name</label>
                                                     <input type="text"  name="name" value="{{ $subcategory['name'] }}">
                                                     <input type="hidden" name="token" value="{{ \App\Classes\CSRFToken::_token() }}">
+
+                                                    <label for="category_id">Change Category</label>
+                                                        <select name="category_id">                                                            
+                                                            @foreach(\App\Models\Category::all() as $category)
+                                                                <option value="{{ $category['id'] }}" 
+                                                                        {{ $category['id'] == $subcategory['category_id'] ? 'selected' : '' }}
+                                                                >
+                                                                    {{ $category['name'] }}
+                                                                </option>
+                                                            @endforeach
+                                                        </select>
                                                     <div>
-                                                        <input type="submit" class="button update-category" id="{{ $subcategory['id'] }}" value="Update">
+                                                        <input type="submit" class="button update-subcategory" id="{{ $subcategory['id'] }}" value="Update">
                                                     </div>
                                                 </div>
                                             </form>
@@ -167,7 +179,7 @@
 
                     {!!  $subcategories_links !!}
                 @else
-                    <h2>No Subcategories created</h2>
+                    <p>No Subcategories created</p>
                 @endif
             </div>
         </div>
