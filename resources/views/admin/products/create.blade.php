@@ -41,9 +41,7 @@
                             <option value="{{ \App\Classes\Request::old('post', 'subcategory') ?: ""}}">
                                 {{ \App\Classes\Request::old('post', 'subcategory') ?: "Select Subcategory"}}
                             </option>
-                            @foreach($subcategories as $subcategory)
-                                <option value="{{ $subcategory->id }}">{{ $subcategory->name }}</option>
-                            @endforeach
+                            
                         </select>
                     </div>
                 </div>

@@ -59,6 +59,13 @@ $router->map(
 //products
 $router->map(
     'GET',
+    '/admin/category/[i:id]/selected',
+    'App\Controllers\Admin\ProductController@getSubcategories',
+    'selected_category'
+);
+
+$router->map(
+    'GET',
     '/admin/product/create',
     'App\Controllers\Admin\ProductController@showCreateProductForm',
     'create_product_form'

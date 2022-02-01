@@ -23,7 +23,7 @@ class ProductController extends BaseController
 
     public function __construct()
     {
-        $this->categories = Category::all();        
+        $this->categories = Category::all();
 
         // list($this->categories, $this->links) = paginate(6, $total, $this->table_name, $object);
         // list($this->subcategories, $this->subcategories_links) = paginate(6, $subcategoriesTotal, 'sub_categories', $subcategories_object);
@@ -149,5 +149,12 @@ class ProductController extends BaseController
         }
 
         return null;
+    }
+
+    public function getSubcategories($id)
+    {
+        $subcategories = SubCategory::where('category_id', $id)->get();
+        echo json_encode($subcategories);
+        exit();
     }
 }

@@ -118,7 +118,7 @@ class ValidateRequest
     protected static function string($column, $value, $policy)
     {
         if ($value != null && !empty($value)) {
-            if (!preg_match('/^[A-Za-z ]+$/', $value)) {
+            if (!preg_match('/^[A-Za-z \']+$/', $value)) {
                 return false;
             }
         }

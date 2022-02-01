@@ -9,6 +9,10 @@
 			case 'home':
 				break;
 
+			case 'adminProduct':
+				ESTORE.admin.changeEvent();
+				break;
+
 			case 'adminCategories':
 				ESTORE.admin.update();
 				ESTORE.admin.delete();
