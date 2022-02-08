@@ -8,6 +8,7 @@ use App\Classes\Utility;
 use App\Models\Category;
 use App\Classes\Redirect;
 use App\Classes\CSRFToken;
+use App\Classes\UploadFile;
 use App\Models\SubCategory;
 use App\Classes\ValidateRequest;
 use App\Controllers\BaseController;
@@ -15,7 +16,7 @@ use App\Controllers\BaseController;
 
 class ProductController extends BaseController
 {
-    public $table_name = 'categories';
+    public $table_name = 'products';
     public $categories;
     public $links;
     public $subcategories;
@@ -45,21 +46,35 @@ class ProductController extends BaseController
             // check if request token is valid, process the form data            
             if (CSRFToken::verifyCSRFToken($request->token)) {
                 $rules = [
-                    'name' => ['required' => true, 'minLength' => 3, 'string' => true, 'unique' => 'categories']
+                    'name' => ['required' => true, 'minLength' => 3, 'maxLength' => 70, 'mixed' => true, 'unique' => $this->table_name],
+                    'price' => ['required' => true, 'minLength' => 2, 'number' => true],
+                    'quantity' => ['required' => true],
+                    'category' => ['required' => true],
+                    'subcategory' => ['required' => true],
+                    'description' => ['required' => true, 'mixed' => true, 'minLength' => 4, 'maxLength' => 500]
                 ];
 
                 $validate = new ValidateRequest();
                 $validate->abide($_POST, $rules);
 
+                $file = Request::get('file');
+                $filename = $file->productImage->name;
+
+                if (empty($file->productImage->name)) {
+                    $file_error['productImage'] = ['Image file is required'];
+                } else if (!UploadFile::isImage($filename)) {
+                    $file_error['productImage'] = ['Only image files allowed, please try again.'];
+                }
+
+
                 // check if any validation errors occurred
                 if ($validate->hasError()) {
-                    $errors = $validate->getErrorMessages();
+                    $response = $validate->getErrorMessages();
+                    count($file_error) ? $errors = array_merge($response, $file_error) : $errors = $response;
                     return view('admin/products/categories', [
                         'categories' => $this->categories,
                         'links' => $this->links,
-                        'errors' => $errors,
-                        'subcategories' => $this->subcategories,
-                        'subcategories_links' => $this->subcategories_links
+                        'errors' => $errors
                     ]);
                 }
 
