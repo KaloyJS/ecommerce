@@ -2,6 +2,7 @@
 
 namespace App\Controllers\Admin;
 
+use App\Models\Product;
 use App\Classes\Request;
 use App\Classes\Session;
 use App\Classes\Utility;
@@ -57,43 +58,46 @@ class ProductController extends BaseController
                 $validate = new ValidateRequest();
                 $validate->abide($_POST, $rules);
 
-                $file = Request::get('file');
-                $filename = $file->productImage->name;
 
-                if (empty($file->productImage->name)) {
+                $file = Request::get('file');
+                isset($file->productImage->name) ? $filename = $file->productImage->name : $filename = "";
+
+                $file_error = [];
+                if (empty($filename)) {
                     $file_error['productImage'] = ['Image file is required'];
                 } else if (!UploadFile::isImage($filename)) {
                     $file_error['productImage'] = ['Only image files allowed, please try again.'];
                 }
 
-
                 // check if any validation errors occurred
                 if ($validate->hasError()) {
                     $response = $validate->getErrorMessages();
                     count($file_error) ? $errors = array_merge($response, $file_error) : $errors = $response;
-                    return view('admin/products/categories', [
+                    return view('admin/products/create', [
                         'categories' => $this->categories,
                         'links' => $this->links,
                         'errors' => $errors
                     ]);
                 }
 
-                Category::create([
+                $ds = DIRECTORY_SEPARATOR;
+                $temp_file = $file->productImage->tmp_name;
+                $image_path = UploadFile::move($temp_file, "images{$ds}uploads{$ds}products", $filename)->path();
+
+                Product::create([
                     'name' => $request->name,
-                    'slug' => slug($request->name)
+                    'description' => $request->description,
+                    'price' => $request->price,
+                    'category_id' => $request->category,
+                    'sub_category_id' => $request->subcategory,
+                    'image_path' => $image_path,
+                    'quantity' => $request->quantity
                 ]);
 
-                $total = count(Category::all());
-                list($this->categories, $this->links) = paginate(6, $total, $this->table_name, new Category());
-
-                $subcategories_object = new SubCategory;
-                $subcategoriesTotal = count(SubCategory::all());
-                list($this->subcategories, $this->subcategories_links) = paginate(6, $subcategoriesTotal, 'sub_categories', $subcategories_object);
-
-                return view('admin/products/categories', [
+                Request::refresh();
+                return view('admin/products/create', [
                     'categories' => $this->categories,
-                    'links' => $this->links,
-                    'success' => 'Category Created',
+                    'success' => 'Record Created',
                     'subcategories' => $this->subcategories,
                     'subcategories_links' => $this->subcategories_links
                 ]);
