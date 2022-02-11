@@ -23,13 +23,14 @@ class Product extends Model
             array_push($products, [
                 'id' => $item->id,
                 'name' => $item->name,
-                'descrition' => $item->description,
+                'description' => $item->description,
                 'category_id' => $item->category_id,
                 'category_name' => Category::where('id', $item->category_id)->first()->name,
                 'sub_category_id' => $item->sub_category_id,
                 'sub_category_name' => SubCategory::where('id', $item->sub_category_id)->first()->name,
                 'price' => $item->price,
                 'image_path' => $item->image_path,
+                'quantity' => $item->quantity,
                 'added' => $added->toFormattedDateString()
             ]);
         }

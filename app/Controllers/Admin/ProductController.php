@@ -18,6 +18,7 @@ use App\Controllers\BaseController;
 class ProductController extends BaseController
 {
     public $table_name = 'products';
+    public $products;
     public $categories;
     public $links;
     public $subcategories;
@@ -26,9 +27,16 @@ class ProductController extends BaseController
     public function __construct()
     {
         $this->categories = Category::all();
+        $total = count(Product::all());
 
-        // list($this->categories, $this->links) = paginate(6, $total, $this->table_name, $object);
-        // list($this->subcategories, $this->subcategories_links) = paginate(6, $subcategoriesTotal, 'sub_categories', $subcategories_object);
+        list($this->products, $this->links) = paginate(10, $total, $this->table_name, new Product);
+    }
+
+    public function show()
+    {
+        $products = $this->products;
+        $links = $this->links;
+        return view('admin/products/inventory', compact('products', 'links'));
     }
 
     public function showCreateProductForm()
