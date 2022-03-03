@@ -1,6 +1,6 @@
 <?php
 
-$router = new AltoRouter();
+
 
 //admin routes 
 $router->map('GET', '/admin', 'App\Controllers\Admin\DashboardController@show', 'admin_dashboard');
@@ -83,4 +83,18 @@ $router->map(
     '/admin/products',
     'App\Controllers\Admin\ProductController@show',
     'show_products'
+);
+
+$router->map(
+    'GET',
+    '/admin/product/[i:id]/edit',
+    'App\Controllers\Admin\ProductController@showEditProductForm',
+    'edit_product_form'
+);
+
+$router->map(
+    'POST',
+    '/admin/product/edit',
+    'App\Controllers\Admin\ProductController@edit',
+    'edit_product'
 );
