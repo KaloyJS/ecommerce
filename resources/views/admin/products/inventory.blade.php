@@ -44,7 +44,7 @@
                                     <td>{{ $product['added'] }}</td>
                                     <td width="50" class="text-right admin-categories-actions"> 
                                         <span data-tooltip tabindex="1" title="Edit Product" class="has-tip top">
-                                            <a href="/admin/product/{{ $product['id'] }}/edit"><i class="fa fa-edit" ></i></a>
+                                            <a href="/admin/product/{{ $product['id'] }}/edit">Edit<i class="fa fa-edit" ></i></a>
                                         </span>      
 
                                     </td>

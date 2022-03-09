@@ -11,6 +11,7 @@
 
 			case 'adminProduct':
 				ESTORE.admin.changeEvent();
+				ESTORE.admin.delete();
 				break;
 
 			case 'adminCategories':

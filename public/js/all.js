@@ -234,6 +234,7 @@ this.inputs.eq(t).attr({id:i,max:this.options.end,min:this.options.start,step:th
 
 			case 'adminProduct':
 				ESTORE.admin.changeEvent();
+				ESTORE.admin.delete();
 				break;
 
 			case 'adminCategories':

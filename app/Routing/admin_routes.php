@@ -98,3 +98,10 @@ $router->map(
     'App\Controllers\Admin\ProductController@edit',
     'edit_product'
 );
+
+$router->map(
+    'POST',
+    '/admin/product/[i:id]/delete',
+    'App\Controllers\Admin\ProductController@delete',
+    'delete_product'
+);

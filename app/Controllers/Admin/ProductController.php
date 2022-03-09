@@ -198,18 +198,10 @@ class ProductController extends BaseController
 
             // check if request token is valid, process the form data            
             if (CSRFToken::verifyCSRFToken($request->token)) {
-                Category::destroy($id);
-                // check if category has subcategories, 
-                // if so delete also subcategories
-                $subcategories = SubCategory::where('category_id', $id)->get();
-                if (count($subcategories)) {
-                    foreach ($subcategories as $key => $subcategory) {
-                        $subcategory->delete();
-                    }
-                }
+                Product::destroy($id);
                 // add success message to session
-                Session::add('success', 'Category Deleted');
-                Redirect::to('/admin/product/categories');
+                Session::add('success', 'Product Deleted');
+                Redirect::to('/admin/products');
             }
             throw new \Exception('Token mismatch');
         }
